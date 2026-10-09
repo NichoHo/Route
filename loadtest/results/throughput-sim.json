@@ -1,0 +1,27 @@
+{
+  "profile": "throughput",
+  "description": "ROUTE_SPEC.md section 11 Throughput: 5,000 couriers, 500 orders/s, 5 minutes.",
+  "started_at": "2026-10-08T07:55:30.968945793Z",
+  "finished_at": "2026-10-08T08:01:59.81272207Z",
+  "duration_s": 390.038850561,
+  "couriers": 5000,
+  "orders": {
+    "sent": 149597,
+    "created": 149597,
+    "dropped_by_client": 0,
+    "errors": 0,
+    "by_http_status": {
+      "201": 149597
+    }
+  },
+  "post_orders_latency_ms_client_side": {
+    "p50": 16,
+    "p99": 512,
+    "max": 1451
+  },
+  "sessions": {
+    "opened": 5000,
+    "reconnects": 0,
+    "token_errors": 0
+  }
+}

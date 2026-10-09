@@ -1,0 +1,36 @@
+# Load-test overrides. Used by loadtest/run.sh as:
+#   docker-compose -p routeload -f docker-compose.yml -f docker-compose.load.yml ...
+services:
+  # Nothing else on the machine should be able to collide with these ports,
+  # and the load test does not need them from the host.
+  postgres:
+    ports: !reset []
+  redis:
+    ports: !reset []
+  redpanda:
+    ports: !reset []
+
+  routed:
+    environment:
+      # Go duration syntax: 0ms, 1000ms, 2s ...
+      - BATCH_WINDOW=${BATCH_WINDOW:-2s}
+
+  # Started before the simulator. Samples while the scenario runs, then writes
+  # the report when routesim's summary file appears.
+  routebench:
+    build:
+      context: ../../
+      dockerfile: deploy/compose/Dockerfile.routebench
+    environment:
+      - BENCH_SCENARIO=${BENCH_SCENARIO:?set BENCH_SCENARIO}
+      - BENCH_LABEL=${BENCH_LABEL:-}
+      - BENCH_WINDOW_MS=${BENCH_WINDOW_MS:-2000}
+      - BENCH_HARDWARE=${BENCH_HARDWARE:-}
+      - POSTGRES_URL=postgres://route:routepassword@postgres:5432/route?sslmode=disable
+      - METRICS_URL=http://routed:9100/metrics
+      - RESULTS_DIR=/results
+    volumes:
+      - ../../loadtest/results:/results
+    depends_on:
+      - postgres
+      - routed

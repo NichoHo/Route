@@ -1,0 +1,12 @@
+FROM golang:1.25-alpine AS builder
+
+WORKDIR /app
+COPY . .
+
+RUN go build -o /routebench ./cmd/routebench
+
+FROM alpine:latest
+COPY --from=builder /routebench /routebench
+# Scenario files, so the report knows when the load phases ran.
+COPY --from=builder /app/loadtest/scenarios /scenarios
+CMD ["/routebench"]

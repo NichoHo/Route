@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Route Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- MapLibre for mapping -->
+    <script src="https://unpkg.com/maplibre-gl@3.3.1/dist/maplibre-gl.js" integrity="sha384-vpn/ucn7785xAq02KoJV78mMCB+FXl+yfBWS2MRjZkzEEvUEsJU3ZarsOD9MSGxu" crossorigin="anonymous"></script>
+    <link href="https://unpkg.com/maplibre-gl@3.3.1/dist/maplibre-gl.css" rel="stylesheet" integrity="sha384-p5cy4wHtKSqjnLUNjQ+8ffCwUp0vlLS+6lg1lc3qqXax2E1EmVCMCAimU+R0MOZH" crossorigin="anonymous" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard">
+        <header class="header">
+            <div class="logo">Route <span>Live</span></div>
+            <div class="metrics" id="metrics-panel">
+                <div class="metric">
+                    <div class="metric-value" id="val-couriers">0</div>
+                    <div class="metric-label">Active Couriers</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" id="val-orders">0</div>
+                    <div class="metric-label">Unassigned Orders</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" id="val-surge">1.0x</div>
+                    <div class="metric-label">Peak Surge</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" id="val-match-rate">0</div>
+                    <div class="metric-label">Total Matches</div>
+                </div>
+            </div>
+        </header>
+        
+        <main class="map-container">
+            <div id="map"></div>
+            
+            <div class="legend">
+                <h4>Status</h4>
+                <div class="legend-item"><span class="dot courier-idle"></span> Courier (Idle)</div>
+                <div class="legend-item"><span class="dot courier-offered"></span> Courier (Offered)</div>
+                <div class="legend-item"><span class="dot courier-assigned"></span> Courier (Assigned)</div>
+                <div class="legend-item"><span class="dot order-queued"></span> Order (Queued)</div>
+                <div class="legend-item"><span class="dot order-assigned"></span> Order (Assigned)</div>
+                <div class="legend-item"><span class="line line-assigned"></span> Assignment</div>
+                <div class="legend-item"><span class="line line-pending"></span> Pending Offer</div>
+                <div class="legend-item"><span class="swatch surge-low"></span> Surge 1.2x to 1.5x</div>
+                <div class="legend-item"><span class="swatch surge-mid"></span> Surge 2x</div>
+                <div class="legend-item"><span class="swatch surge-high"></span> Surge 3x</div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

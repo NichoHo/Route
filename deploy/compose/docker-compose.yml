@@ -1,0 +1,162 @@
+
+
+services:
+  postgres:
+    image: postgis/postgis:15-3.3
+    environment:
+      POSTGRES_USER: route
+      POSTGRES_PASSWORD: routepassword
+      POSTGRES_DB: route
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ../postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      # First start runs init.sql (and creates the PostGIS extension), which
+      # can take over 30s on a slow disk. Over TCP, so the temporary init
+      # server (unix socket only) does not count as ready.
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U route -d route"]
+      interval: 5s
+      timeout: 5s
+      retries: 24
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "127.0.0.1:6379:6379"
+
+  redpanda:
+    image: redpandadata/redpanda:v23.2.3
+    command:
+      - redpanda
+      - start
+      - --smp
+      - "1"
+      - --reserve-memory
+      - 0M
+      - --overprovisioned
+      - --node-id
+      - "0"
+      - --kafka-addr
+      - PLAINTEXT://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092
+      - --advertise-kafka-addr
+      - PLAINTEXT://redpanda:29092,OUTSIDE://localhost:9092
+    ports:
+      - "127.0.0.1:9092:9092"
+      - "127.0.0.1:29092:29092"
+
+  routed:
+    build:
+      context: ../../
+      dockerfile: deploy/compose/Dockerfile.routed
+    environment:
+      - POSTGRES_URL=postgres://route:routepassword@postgres:5432/route?sslmode=disable
+      - REDIS_ADDR=redis:6379
+      - REDPANDA_ADDR=redpanda:29092
+      # Dev-only default; set ROUTE_API_TOKEN in deploy/compose/.env (gitignored) for anything shared.
+      - ROUTE_API_TOKEN=${ROUTE_API_TOKEN:-dev-only-token-change-me}
+    ports:
+      - "8080:8080" # HTTP, WS, and the static dashboard at /
+      - "9090:9090" # gRPC
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      redpanda:
+        condition: service_started
+      jaeger:
+        condition: service_started
+
+  routesim:
+    build:
+      context: ../../
+      dockerfile: deploy/compose/Dockerfile.routesim
+    environment:
+      - ROUTED_ADDR=routed:9090
+      - ROUTED_HTTP_ADDR=http://routed:8080
+      - ROUTE_API_TOKEN=${ROUTE_API_TOKEN:-dev-only-token-change-me}
+      # Empty means the plain demo load. For a scenario: SIM_PROFILE=/scenarios/demo.json
+      - SIM_PROFILE=${SIM_PROFILE:-}
+      - SIM_RESULTS_DIR=/results
+    volumes:
+      - ../../loadtest/results:/results
+    depends_on:
+      - routed
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "127.0.0.1:16686:16686" # UI
+      - "127.0.0.1:4317:4317"   # OTLP gRPC
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "127.0.0.1:9091:9090" # Prometheus UI
+    depends_on:
+      - routed
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "127.0.0.1:3001:3000" # Grafana UI
+    depends_on:
+      - prometheus
+
+  # Throwaway databases for the test profile only, so `go test` truncating
+  # tables and flushing Redis never touches the demo's postgres/redis above.
+  postgres_test:
+    profiles:
+      - test
+    image: postgis/postgis:15-3.3
+    environment:
+      POSTGRES_USER: route
+      POSTGRES_PASSWORD: routepassword
+      POSTGRES_DB: route
+    volumes:
+      - ../postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      # First start runs init.sql (and creates the PostGIS extension), which
+      # can take over 30s on a slow disk. Over TCP, so the temporary init
+      # server (unix socket only) does not count as ready.
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U route -d route"]
+      interval: 5s
+      timeout: 5s
+      retries: 24
+
+  redis_test:
+    profiles:
+      - test
+    image: redis:7-alpine
+
+  test:
+    profiles:
+      - test
+    build:
+      context: ../../
+      dockerfile: Dockerfile.buildenv
+    environment:
+      - POSTGRES_URL=postgres://route:routepassword@postgres_test:5432/route?sslmode=disable
+      - REDIS_ADDR=redis_test:6379
+    volumes:
+      - ../../:/app
+      # Keep Go's module and build caches between runs: without them every run
+      # re-downloads modules and recompiles the C code in h3-go.
+      - gomod:/go/pkg/mod
+      - gobuild:/root/.cache/go-build
+    working_dir: /app
+    command: ["sh", "verify_build.sh"]
+    depends_on:
+      postgres_test:
+        condition: service_healthy
+      redis_test:
+        condition: service_started
+
+volumes:
+  postgres_data:
+  gomod:
+  gobuild:

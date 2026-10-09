@@ -1,0 +1,46 @@
+[
+  {
+    "batch_window_ms": 0,
+    "orders": 5995,
+    "mean_pickup_distance_m": 442.8794275143527,
+    "match_latency_p50_s": 0.012436,
+    "match_latency_p99_s": 12.277167820000018,
+    "match_rate": 0.9963302752293578,
+    "pickup_distance_change_vs_0ms_pct": 0,
+    "added_p50_latency_vs_0ms_s": 0,
+    "batched_over_greedy_distance_in_batch": 0.9828194950043486
+  },
+  {
+    "batch_window_ms": 1000,
+    "orders": 5984,
+    "mean_pickup_distance_m": 379.72166445551545,
+    "match_latency_p50_s": 0.572535,
+    "match_latency_p99_s": 12.670379420000007,
+    "match_rate": 0.9953208556149733,
+    "pickup_distance_change_vs_0ms_pct": -14.260712766295844,
+    "added_p50_latency_vs_0ms_s": 0.560099,
+    "batched_over_greedy_distance_in_batch": 0.9471952990166971
+  },
+  {
+    "batch_window_ms": 2000,
+    "orders": 5953,
+    "mean_pickup_distance_m": 353.58874720722446,
+    "match_latency_p50_s": 0.925596,
+    "match_latency_p99_s": 14.830521519999989,
+    "match_rate": 0.9969763144632958,
+    "pickup_distance_change_vs_0ms_pct": -20.161397156844576,
+    "added_p50_latency_vs_0ms_s": 0.91316,
+    "batched_over_greedy_distance_in_batch": 0.9303979372943594
+  },
+  {
+    "batch_window_ms": 4000,
+    "orders": 6120,
+    "mean_pickup_distance_m": 327.88640074238924,
+    "match_latency_p50_s": 0.886481,
+    "match_latency_p99_s": 16.001920810000023,
+    "match_rate": 0.9955882352941177,
+    "pickup_distance_change_vs_0ms_pct": -25.964860778780878,
+    "added_p50_latency_vs_0ms_s": 0.874045,
+    "batched_over_greedy_distance_in_batch": 0.913807733353521
+  }
+]

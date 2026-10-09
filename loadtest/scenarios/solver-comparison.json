@@ -1,0 +1,48 @@
+{
+  "name": "solver-comparison",
+  "description": "ROUTE_SPEC.md section 11 Solver comparison: the baseline load, shortened, run once per BATCH_WINDOW (0, 1000, 2000, 4000 ms).",
+  "couriers": 1000,
+  "ramp_up_s": 30,
+  "ping_interval_ms": 3000,
+  "speed_mps": 500,
+  "drain_s": 60,
+  "behavior": {
+    "accept_mean": 0.85,
+    "accept_stddev": 0.08,
+    "response_delay_ms": [
+      500,
+      3000
+    ]
+  },
+  "hotspots": [
+    {
+      "name": "bundaran-hi",
+      "lat": -6.1951,
+      "lng": 106.823,
+      "sigma_m": 500,
+      "weight": 3
+    },
+    {
+      "name": "tanah-abang",
+      "lat": -6.186,
+      "lng": 106.81,
+      "sigma_m": 600,
+      "weight": 2
+    },
+    {
+      "name": "monas",
+      "lat": -6.1754,
+      "lng": 106.8272,
+      "sigma_m": 500,
+      "weight": 1
+    }
+  ],
+  "phases": [
+    {
+      "name": "steady",
+      "duration_s": 120,
+      "orders_per_s": 50,
+      "hotspot_share": 0.5
+    }
+  ]
+}

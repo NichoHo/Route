@@ -1,0 +1,27 @@
+{
+  "profile": "solver-comparison",
+  "description": "ROUTE_SPEC.md section 11 Solver comparison: the baseline load, shortened, run once per BATCH_WINDOW (0, 1000, 2000, 4000 ms).",
+  "started_at": "2026-10-08T08:25:02.686373769Z",
+  "finished_at": "2026-10-08T08:28:02.68716754Z",
+  "duration_s": 180.008716064,
+  "couriers": 1000,
+  "orders": {
+    "sent": 6120,
+    "created": 6120,
+    "dropped_by_client": 0,
+    "errors": 0,
+    "by_http_status": {
+      "201": 6120
+    }
+  },
+  "post_orders_latency_ms_client_side": {
+    "p50": 8,
+    "p99": 16,
+    "max": 56
+  },
+  "sessions": {
+    "opened": 1000,
+    "reconnects": 0,
+    "token_errors": 0
+  }
+}

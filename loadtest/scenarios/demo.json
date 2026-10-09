@@ -1,0 +1,58 @@
+{
+  "name": "demo",
+  "description": "Live demo: a calm stretch, then a rush into Bundaran HI that drives a zone to peak surge. Loops forever.",
+  "couriers": 50,
+  "ramp_up_s": 5,
+  "ping_interval_ms": 1000,
+  "speed_mps": 60,
+  "loop": true,
+  "behavior": {
+    "accept_mean": 0.85,
+    "accept_stddev": 0.08,
+    "response_delay_ms": [
+      1000,
+      3000
+    ],
+    "flaky_fraction": 0.04
+  },
+  "hotspots": [
+    {
+      "name": "bundaran-hi",
+      "lat": -6.1951,
+      "lng": 106.823,
+      "sigma_m": 500,
+      "weight": 3
+    },
+    {
+      "name": "tanah-abang",
+      "lat": -6.186,
+      "lng": 106.81,
+      "sigma_m": 600,
+      "weight": 2
+    },
+    {
+      "name": "monas",
+      "lat": -6.1754,
+      "lng": 106.8272,
+      "sigma_m": 500,
+      "weight": 1
+    }
+  ],
+  "phases": [
+    {
+      "name": "calm",
+      "duration_s": 60,
+      "orders_per_s": 0.5,
+      "hotspot_share": 0.4
+    },
+    {
+      "name": "rush",
+      "duration_s": 30,
+      "orders_per_s": 3,
+      "hotspot_share": 0.95,
+      "focus": [
+        "bundaran-hi"
+      ]
+    }
+  ]
+}

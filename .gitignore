@@ -1,0 +1,9 @@
+# Secrets: never commit. If one is ever committed, rotate it.
+.env
+*.env
+deploy/compose/.env
+
+node_modules/
+
+# Local run logs
+loadtest/results/.run-*.log

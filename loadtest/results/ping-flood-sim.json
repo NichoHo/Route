@@ -1,0 +1,27 @@
+{
+  "profile": "ping-flood",
+  "description": "ROUTE_SPEC.md section 11 Ping flood: 5,000 couriers at 1 ping/s (about 5,000 pings/s) with a light order load.",
+  "started_at": "2026-10-08T08:03:22.197690661Z",
+  "finished_at": "2026-10-08T08:05:52.207899994Z",
+  "duration_s": 150.016986425,
+  "couriers": 5000,
+  "orders": {
+    "sent": 615,
+    "created": 615,
+    "dropped_by_client": 0,
+    "errors": 0,
+    "by_http_status": {
+      "201": 615
+    }
+  },
+  "post_orders_latency_ms_client_side": {
+    "p50": 4,
+    "p99": 64,
+    "max": 61
+  },
+  "sessions": {
+    "opened": 5000,
+    "reconnects": 0,
+    "token_errors": 0
+  }
+}

@@ -1,0 +1,474 @@
+{
+  "scenario": "hotspot-spike",
+  "label": "hotspot-spike",
+  "batch_window_ms": 2000,
+  "hardware": "AMD Ryzen 7 5800H (8 cores, 16 threads); Docker Desktop VM with 16 CPUs and 8 GB RAM; the load generator, routed, Postgres, Redis and Redpanda all share this one machine",
+  "started_at": "2026-10-08T08:06:20.105557271Z",
+  "finished_at": "2026-10-08T08:09:30.10019089Z",
+  "load_duration_s": 130,
+  "simulator": {
+    "profile": "hotspot-spike",
+    "started_at": "2026-10-08T08:06:20.105557271Z",
+    "finished_at": "2026-10-08T08:09:30.10019089Z",
+    "duration_s": 190.004277287,
+    "couriers": 1000,
+    "orders": {
+      "sent": 3204,
+      "created": 3204,
+      "dropped_by_client": 0,
+      "errors": 0,
+      "by_http_status": {
+        "201": 3204
+      }
+    },
+    "post_orders_latency_ms_client_side": {
+      "p50": 8,
+      "p99": 32,
+      "max": 30
+    },
+    "sessions": {
+      "opened": 1000,
+      "reconnects": 0,
+      "token_errors": 0
+    }
+  },
+  "orders": {
+    "created": 3204,
+    "assigned": 3186,
+    "exhausted": 18,
+    "cancelled": 0,
+    "still_open_at_end": 0
+  },
+  "match_rate": 0.9943820224719101,
+  "match_latency_s": {
+    "p50": 0.7736845,
+    "p99": 11.57471475,
+    "max": 15.170095
+  },
+  "mean_pickup_distance_m": 980.7181076833436,
+  "batches": {
+    "count": 162,
+    "max_size": 100,
+    "solved_hungarian": 162,
+    "solved_greedy": 0,
+    "total_distance_batched_m": 3753232.5750622293,
+    "total_distance_greedy_m": 3797971.5027021687,
+    "distance_ratio_batched_over_greedy": 0.9882203098132494,
+    "mean_solve_ms": 49.60493827160494,
+    "share_greedy_solver": 0
+  },
+  "counters": {
+    "pings_shed": 0,
+    "pings_rejected": 0,
+    "claim_conflicts": 0,
+    "claims_restored": 1,
+    "ping_index_lag_p99_s": 0.004759857890800299
+  },
+  "surge_peak_multiplier": 3,
+  "queue_depth_max": 101,
+  "queue_depth_mean_by_third": [
+    32.75,
+    26.11111111111111,
+    10.88888888888889
+  ],
+  "queue_depth_stable": true,
+  "seconds_to_drain_after_spike": 18.560095857,
+  "double_booked_observed": 0,
+  "targets": [
+    {
+      "name": "batch size cap holds",
+      "target": "max batch \u003c= 100 orders",
+      "measured": "100",
+      "pass": true
+    },
+    {
+      "name": "queue drains after the spike",
+      "target": "within 60 s",
+      "measured": "19 s",
+      "pass": true
+    },
+    {
+      "name": "surge reaches the maximum",
+      "target": "3.0x",
+      "measured": "3.0x",
+      "pass": true
+    },
+    {
+      "name": "no double booking",
+      "target": "0 observed",
+      "measured": "0",
+      "pass": true
+    }
+  ],
+  "samples": [
+    {
+      "at": "2026-10-08T08:06:18.541268287Z",
+      "t_s": -1.564288984,
+      "queue_depth": 0,
+      "orders_awaiting_match": 0,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:06:23.557214238Z",
+      "t_s": 3.451656967,
+      "queue_depth": 5,
+      "orders_awaiting_match": 34,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:06:28.566442481Z",
+      "t_s": 8.46088521,
+      "queue_depth": 24,
+      "orders_awaiting_match": 61,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:06:33.57410141Z",
+      "t_s": 13.468544139,
+      "queue_depth": 7,
+      "orders_awaiting_match": 7,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:06:38.584239694Z",
+      "t_s": 18.478682423,
+      "queue_depth": 18,
+      "orders_awaiting_match": 18,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:06:43.593120353Z",
+      "t_s": 23.487563082,
+      "queue_depth": 5,
+      "orders_awaiting_match": 5,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:06:48.601645297Z",
+      "t_s": 28.496088026,
+      "queue_depth": 19,
+      "orders_awaiting_match": 19,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:06:53.612347613Z",
+      "t_s": 33.506790342,
+      "queue_depth": 83,
+      "orders_awaiting_match": 83,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:06:58.619691055Z",
+      "t_s": 38.514133784,
+      "queue_depth": 101,
+      "orders_awaiting_match": 609,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:07:03.632055466Z",
+      "t_s": 43.526498195,
+      "queue_depth": 99,
+      "orders_awaiting_match": 507,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:07:08.643312489Z",
+      "t_s": 48.537755218,
+      "queue_depth": 52,
+      "orders_awaiting_match": 56,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:07:13.658234544Z",
+      "t_s": 53.552677273,
+      "queue_depth": 19,
+      "orders_awaiting_match": 19,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:07:18.665653128Z",
+      "t_s": 58.560095857,
+      "queue_depth": 4,
+      "orders_awaiting_match": 4,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:07:23.671078769Z",
+      "t_s": 63.565521498,
+      "queue_depth": 18,
+      "orders_awaiting_match": 18,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:07:28.677835152Z",
+      "t_s": 68.572277881,
+      "queue_depth": 4,
+      "orders_awaiting_match": 4,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:07:33.686725091Z",
+      "t_s": 73.58116782,
+      "queue_depth": 13,
+      "orders_awaiting_match": 13,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:07:38.695116097Z",
+      "t_s": 78.589558826,
+      "queue_depth": 5,
+      "orders_awaiting_match": 5,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:07:43.704977333Z",
+      "t_s": 83.599420062,
+      "queue_depth": 21,
+      "orders_awaiting_match": 21,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:07:48.7140361Z",
+      "t_s": 88.608478829,
+      "queue_depth": 6,
+      "orders_awaiting_match": 6,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:07:53.719161539Z",
+      "t_s": 93.613604268,
+      "queue_depth": 20,
+      "orders_awaiting_match": 20,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:07:58.727486987Z",
+      "t_s": 98.621929716,
+      "queue_depth": 3,
+      "orders_awaiting_match": 3,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:08:03.736538454Z",
+      "t_s": 103.630981183,
+      "queue_depth": 21,
+      "orders_awaiting_match": 21,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:08:08.741875267Z",
+      "t_s": 108.636317996,
+      "queue_depth": 6,
+      "orders_awaiting_match": 7,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:08:13.749191013Z",
+      "t_s": 113.643633742,
+      "queue_depth": 14,
+      "orders_awaiting_match": 14,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:08:18.754231859Z",
+      "t_s": 118.648674588,
+      "queue_depth": 8,
+      "orders_awaiting_match": 8,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:08:23.762181571Z",
+      "t_s": 123.6566243,
+      "queue_depth": 18,
+      "orders_awaiting_match": 18,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:08:28.768324292Z",
+      "t_s": 128.662767021,
+      "queue_depth": 2,
+      "orders_awaiting_match": 2,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:08:33.776939392Z",
+      "t_s": 133.671382121,
+      "queue_depth": 1,
+      "orders_awaiting_match": 1,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:08:38.78485384Z",
+      "t_s": 138.679296569,
+      "queue_depth": 0,
+      "orders_awaiting_match": 0,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:08:43.793415513Z",
+      "t_s": 143.687858242,
+      "queue_depth": 0,
+      "orders_awaiting_match": 0,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:08:48.798130143Z",
+      "t_s": 148.692572872,
+      "queue_depth": 0,
+      "orders_awaiting_match": 0,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:08:53.805686046Z",
+      "t_s": 153.700128775,
+      "queue_depth": 0,
+      "orders_awaiting_match": 0,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:08:58.814676749Z",
+      "t_s": 158.709119478,
+      "queue_depth": 0,
+      "orders_awaiting_match": 0,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:09:03.821360176Z",
+      "t_s": 163.715802905,
+      "queue_depth": 0,
+      "orders_awaiting_match": 0,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:09:08.829521828Z",
+      "t_s": 168.723964557,
+      "queue_depth": 0,
+      "orders_awaiting_match": 0,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:09:13.835737962Z",
+      "t_s": 173.730180691,
+      "queue_depth": 0,
+      "orders_awaiting_match": 0,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:09:18.840574816Z",
+      "t_s": 178.735017545,
+      "queue_depth": 0,
+      "orders_awaiting_match": 0,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:09:23.845446398Z",
+      "t_s": 183.739889127,
+      "queue_depth": 0,
+      "orders_awaiting_match": 0,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:09:28.850202001Z",
+      "t_s": 188.74464473,
+      "queue_depth": 0,
+      "orders_awaiting_match": 0,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:09:33.853053057Z",
+      "t_s": 193.747495786,
+      "queue_depth": 0,
+      "orders_awaiting_match": 0,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    },
+    {
+      "at": "2026-10-08T08:09:33.858650442Z",
+      "t_s": 193.753093171,
+      "queue_depth": 0,
+      "orders_awaiting_match": 0,
+      "pings_shed_total": 0,
+      "claim_conflicts_total": 0,
+      "double_booked": 0
+    }
+  ]
+}

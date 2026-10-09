@@ -1,0 +1,48 @@
+{
+  "name": "ping-flood",
+  "description": "ROUTE_SPEC.md section 11 Ping flood: 5,000 couriers at 1 ping/s (about 5,000 pings/s) with a light order load.",
+  "couriers": 5000,
+  "ramp_up_s": 60,
+  "ping_interval_ms": 1000,
+  "speed_mps": 500,
+  "drain_s": 30,
+  "behavior": {
+    "accept_mean": 0.85,
+    "accept_stddev": 0.08,
+    "response_delay_ms": [
+      500,
+      3000
+    ]
+  },
+  "hotspots": [
+    {
+      "name": "bundaran-hi",
+      "lat": -6.1951,
+      "lng": 106.823,
+      "sigma_m": 500,
+      "weight": 3
+    },
+    {
+      "name": "tanah-abang",
+      "lat": -6.186,
+      "lng": 106.81,
+      "sigma_m": 600,
+      "weight": 2
+    },
+    {
+      "name": "monas",
+      "lat": -6.1754,
+      "lng": 106.8272,
+      "sigma_m": 500,
+      "weight": 1
+    }
+  ],
+  "phases": [
+    {
+      "name": "steady",
+      "duration_s": 120,
+      "orders_per_s": 5,
+      "hotspot_share": 0.5
+    }
+  ]
+}

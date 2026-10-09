@@ -1,0 +1,17 @@
+FROM golang:1.25-alpine AS builder
+
+WORKDIR /app
+
+# Copy the whole project. courier.pb.go / courier_grpc.pb.go are committed
+# and canonical; regenerate them with `make proto` when the .proto changes,
+# not at build time.
+COPY . .
+
+RUN go build -o /routesim ./cmd/routesim
+
+FROM alpine:latest
+WORKDIR /app
+COPY --from=builder /routesim /routesim
+# Scenario profiles: SIM_PROFILE=/scenarios/<name>.json
+COPY --from=builder /app/loadtest/scenarios /scenarios
+CMD ["/routesim"]

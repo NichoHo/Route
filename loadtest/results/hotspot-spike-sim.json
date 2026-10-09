@@ -1,0 +1,27 @@
+{
+  "profile": "hotspot-spike",
+  "description": "ROUTE_SPEC.md section 11 Hotspot spike: 2,000 orders in 10 seconds into one zone with 1,000 couriers.",
+  "started_at": "2026-10-08T08:06:20.105557271Z",
+  "finished_at": "2026-10-08T08:09:30.10019089Z",
+  "duration_s": 190.004277287,
+  "couriers": 1000,
+  "orders": {
+    "sent": 3204,
+    "created": 3204,
+    "dropped_by_client": 0,
+    "errors": 0,
+    "by_http_status": {
+      "201": 3204
+    }
+  },
+  "post_orders_latency_ms_client_side": {
+    "p50": 8,
+    "p99": 32,
+    "max": 30
+  },
+  "sessions": {
+    "opened": 1000,
+    "reconnects": 0,
+    "token_errors": 0
+  }
+}

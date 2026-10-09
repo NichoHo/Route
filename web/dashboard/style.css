@@ -1,0 +1,182 @@
+:root {
+    --bg-dark: #0f172a;
+    --panel-bg: rgba(30, 41, 59, 0.85);
+    --border-color: rgba(51, 65, 85, 0.6);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    
+    --color-idle: #0ea5e9;
+    --color-queued: #f59e0b;
+    --color-assigned: #10b981;
+    --color-pending: #f43f5e;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    overflow: hidden;
+}
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: var(--panel-bg);
+    border-bottom: 1px solid var(--border-color);
+    backdrop-filter: blur(12px);
+    z-index: 10;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+
+.logo span {
+    color: var(--color-idle);
+}
+
+.metrics {
+    display: flex;
+    gap: 2rem;
+}
+
+.metric {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.metric-value {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+}
+
+.metric-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.map-container {
+    position: relative;
+    flex: 1;
+    /* A flex item defaults to min-height:auto, so a tall map canvas would
+       stretch it past the viewport and push the legend off screen. */
+    min-height: 0;
+}
+
+#map {
+    position: absolute;
+    inset: 0;
+}
+
+.legend {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    background: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
+.legend h4 {
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    font-size: 0.875rem;
+}
+
+.legend-item:last-child {
+    margin-bottom: 0;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 0.75rem;
+    box-shadow: 0 0 8px currentColor;
+}
+
+.line {
+    width: 24px;
+    height: 2px;
+    margin-right: 0.75rem;
+    background: currentColor;
+}
+
+.line-pending {
+    border-bottom: 2px dashed currentColor;
+    background: transparent;
+    color: var(--color-pending);
+}
+
+.line-assigned {
+    color: var(--color-assigned);
+}
+
+.courier-idle { color: var(--color-idle); background: var(--color-idle); }
+.courier-offered { color: var(--color-pending); background: var(--color-pending); }
+.courier-assigned { color: var(--color-assigned); background: var(--color-assigned); }
+.order-queued { color: var(--color-queued); background: var(--color-queued); }
+.order-assigned { color: var(--color-assigned); background: var(--color-assigned); }
+
+/* Map markers override */
+.marker-courier {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+.marker-order {
+    width: 14px;
+    height: 14px;
+    border-radius: 2px;
+    border: 2px solid #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+/* Surge heatmap legend swatches: same colours as the map layer in app.js. */
+.swatch {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    margin-right: 8px;
+    opacity: 0.85;
+}
+.surge-low  { background: #fde047; }
+.surge-mid  { background: #fb923c; }
+.surge-high { background: #ef4444; }

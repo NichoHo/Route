@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package route;
+option go_package = "route/internal/api/proto;proto";
+
+service Courier {
+  rpc Session(stream CourierMessage) returns (stream ServerMessage);
+}
+
+message CourierMessage {
+  oneof payload {
+    Ping ping = 1;
+    OfferResponse offer_response = 2;
+    CompletionReport completion_report = 3;
+  }
+}
+
+message Ping {
+  string courier_id = 1;
+  double lat = 2;
+  double lng = 3;
+  double heading = 4;
+  int64 client_ts = 5;
+  int64 seq = 6;
+}
+
+message OfferResponse {
+  string offer_id = 1;
+  bool accept = 2;
+}
+
+message CompletionReport {
+  string order_id = 1;
+}
+
+message ServerMessage {
+  oneof payload {
+    Ack ack = 1;
+    Offer offer = 2;
+    OfferOutcome offer_outcome = 3;
+  }
+}
+
+message OfferOutcome {
+  string offer_id = 1;
+  bool success = 2;
+  string reason = 3;
+}
+
+message Ack {
+  int64 seq = 1;
+}
+
+message Offer {
+  string offer_id = 1;
+  string order_id = 2;
+  int64 deadline_ts = 3;
+}

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" width="760" height="340" font-family="Helvetica, Arial, sans-serif" font-size="12">
+<title>contention: orders waiting during the run</title><rect width="100%" height="100%" fill="#ffffff"/>
+<text x="70" y="24" font-size="15" font-weight="bold" fill="#1f2328">contention: orders waiting during the run</text>
+<line x1="70" y1="284.0" x2="740" y2="284.0" stroke="#d0d7de"/>
+<text x="62" y="288.0" text-anchor="end" fill="#59636e">0</text>
+<line x1="70" y1="236.4" x2="740" y2="236.4" stroke="#d0d7de"/>
+<text x="62" y="240.4" text-anchor="end" fill="#59636e">20000</text>
+<line x1="70" y1="188.8" x2="740" y2="188.8" stroke="#d0d7de"/>
+<text x="62" y="192.8" text-anchor="end" fill="#59636e">40000</text>
+<line x1="70" y1="141.2" x2="740" y2="141.2" stroke="#d0d7de"/>
+<text x="62" y="145.2" text-anchor="end" fill="#59636e">60000</text>
+<line x1="70" y1="93.6" x2="740" y2="93.6" stroke="#d0d7de"/>
+<text x="62" y="97.6" text-anchor="end" fill="#59636e">80000</text>
+<line x1="70" y1="46.0" x2="740" y2="46.0" stroke="#d0d7de"/>
+<text x="62" y="50.0" text-anchor="end" fill="#59636e">100000</text>
+<text x="405" y="328" text-anchor="middle" fill="#59636e">seconds since the simulator started</text>
+<text transform="translate(16 165) rotate(-90)" text-anchor="middle" fill="#59636e">orders</text>
+<text x="70.0" y="302" text-anchor="middle" fill="#59636e">0</text>
+<text x="204.0" y="302" text-anchor="middle" fill="#59636e">54.9</text>
+<text x="338.0" y="302" text-anchor="middle" fill="#59636e">110</text>
+<text x="472.0" y="302" text-anchor="middle" fill="#59636e">165</text>
+<text x="606.0" y="302" text-anchor="middle" fill="#59636e">220</text>
+<text x="740.0" y="302" text-anchor="middle" fill="#59636e">274</text>
+<polyline fill="none" stroke="#1f6feb" stroke-width="2" points="78.3,281.9 90.6,276.3 102.8,266.6 115.0,260.2 127.3,260.2 139.5,260.2 151.7,260.2 163.9,260.2 176.2,260.2 188.4,260.2 200.7,260.2 212.9,260.2 225.2,260.2 237.5,260.2 249.8,260.2 262.0,260.2 274.3,260.2 286.6,260.2 298.9,260.2 311.3,260.2 323.5,260.2 335.8,260.2 348.0,260.2 360.3,260.2 372.6,260.3 384.8,260.2 397.1,260.2 409.4,260.4 421.7,260.2 434.0,260.4 446.2,260.2 458.5,260.8 470.8,260.3 483.0,260.9 495.3,260.5 507.6,260.5 519.8,260.2 532.1,260.5 544.3,260.5 556.6,260.5 568.8,260.5 581.0,260.6 593.3,260.3 605.5,263.6 617.7,263.8 630.0,260.8 642.2,260.2 654.4,278.9 666.7,284.0 678.9,284.0 691.1,284.0 703.3,284.0 715.5,284.0 727.8,284.0 740.0,284.0 740.0,284.0"/>
+<polyline fill="none" stroke="#d1242f" stroke-width="2" points="78.3,279.9 90.6,274.0 102.8,268.4 115.0,262.9 127.3,257.1 139.5,251.5 151.7,245.9 163.9,240.2 176.2,234.6 188.4,228.9 200.7,223.4 212.9,217.8 225.2,212.3 237.5,206.8 249.8,201.0 262.0,195.5 274.3,189.6 286.6,183.9 298.9,178.1 311.3,172.4 323.5,166.8 335.8,161.0 348.0,155.2 360.3,149.5 372.6,151.3 384.8,154.9 397.1,161.2 409.4,165.6 421.7,172.8 434.0,177.6 446.2,184.6 458.5,189.5 470.8,196.4 483.0,201.2 495.3,208.1 507.6,212.7 519.8,219.8 532.1,224.4 544.3,231.6 556.6,236.2 568.8,243.4 581.0,248.2 593.3,255.3 605.5,259.7 617.7,266.1 630.0,270.6 642.2,277.1 654.4,281.6 666.7,284.0 678.9,284.0 691.1,284.0 703.3,284.0 715.5,284.0 727.8,284.0 740.0,284.0 740.0,284.0"/>
+<rect x="70" y="32" width="12" height="12" fill="#1f6feb"/><text x="88" y="43" fill="#1f2328">queue depth (in the matcher)</text>
+<rect x="296" y="32" width="12" height="12" fill="#d1242f"/><text x="314" y="43" fill="#1f2328">orders awaiting a match (queued or batched)</text>
+</svg>

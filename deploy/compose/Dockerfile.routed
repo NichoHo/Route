@@ -1,0 +1,22 @@
+FROM golang:1.25-alpine AS builder
+
+WORKDIR /app
+
+# Copy the whole project. courier.pb.go / courier_grpc.pb.go are committed
+# and canonical; regenerate them with `make proto` when the .proto changes,
+# not at build time.
+COPY . .
+
+# gcc for h3-go's CGO
+RUN apk add --no-cache build-base
+
+# Build routed with CGO (required by h3-go)
+ENV CGO_ENABLED=1
+RUN go build -o /routed ./cmd/routed
+
+FROM alpine:latest
+WORKDIR /app
+COPY --from=builder /routed /routed
+COPY web/dashboard ./web/dashboard
+EXPOSE 8080 9090
+CMD ["/routed"]

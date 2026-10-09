@@ -1,0 +1,38 @@
+# Re-runs the tests and a reduced set of load scenarios every week, so the
+# published numbers do not go stale (ROUTE_SPEC.md section 11).
+#
+# NOT YET RUN. This file has not been executed on GitHub. Two things to know
+# before trusting it:
+#   - GitHub-hosted runners have about 4 CPUs and 16 GB of RAM, a fraction of the
+#     machine the published numbers came from. The runs below are a trend check,
+#     not a replacement for them. The throughput scenario (5,000 couriers,
+#     500 orders/s) needs a bigger, self-hosted runner. Change `runs-on` and the
+#     scenario list to match.
+#   - The results are uploaded as an artifact. Nothing is committed back.
+name: load test
+
+on:
+  schedule:
+    - cron: "0 3 * * 1" # Mondays, 03:00 UTC
+  workflow_dispatch: {}
+
+jobs:
+  test-and-load:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Unit, integration, chaos and end-to-end tests
+        run: make test
+
+      - name: Load scenarios (reduced set)
+        env:
+          BENCH_HARDWARE: GitHub-hosted ubuntu-latest runner
+        run: loadtest/run-all.sh baseline hotspot-spike contention
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: load-test-results
+          path: loadtest/results/

@@ -1,0 +1,6 @@
+FROM golang:1.25-alpine
+RUN apk add --no-cache build-base git protoc protobuf-dev
+RUN go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.33.0 && \
+    go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.3.0
+# The golang base image already puts $GOPATH/bin (/go/bin) on PATH.
+ENV CGO_ENABLED=1

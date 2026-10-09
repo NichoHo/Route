@@ -1,0 +1,49 @@
+{
+  "name": "hotspot-spike",
+  "description": "ROUTE_SPEC.md section 11 Hotspot spike: 2,000 orders in 10 seconds into one zone with 1,000 couriers.",
+  "couriers": 1000,
+  "ramp_up_s": 30,
+  "ping_interval_ms": 3000,
+  "speed_mps": 500,
+  "drain_s": 60,
+  "behavior": {
+    "accept_mean": 0.85,
+    "accept_stddev": 0.08,
+    "response_delay_ms": [
+      500,
+      3000
+    ]
+  },
+  "hotspots": [
+    {
+      "name": "spike",
+      "lat": -6.1951,
+      "lng": 106.823,
+      "sigma_m": 300,
+      "weight": 1
+    }
+  ],
+  "phases": [
+    {
+      "name": "warm-up",
+      "duration_s": 30,
+      "orders_per_s": 10,
+      "hotspot_share": 0
+    },
+    {
+      "name": "spike",
+      "duration_s": 10,
+      "orders_per_s": 200,
+      "hotspot_share": 1,
+      "focus": [
+        "spike"
+      ]
+    },
+    {
+      "name": "recovery",
+      "duration_s": 90,
+      "orders_per_s": 10,
+      "hotspot_share": 0
+    }
+  ]
+}

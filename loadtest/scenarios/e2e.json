@@ -1,0 +1,43 @@
+{
+  "name": "e2e",
+  "description": "ROUTE_SPEC.md 10.6: 50 couriers, 20 orders over 30 seconds, one flaky courier, one hotspot.",
+  "couriers": 50,
+  "ramp_up_s": 2,
+  "ping_interval_ms": 1000,
+  "speed_mps": 150,
+  "drain_s": 30,
+  "behavior": {
+    "accept_mean": 0.85,
+    "accept_stddev": 0.08,
+    "response_delay_ms": [
+      500,
+      2000
+    ],
+    "flaky_fraction": 0.02,
+    "flaky_off_s": [
+      10,
+      20
+    ],
+    "flaky_on_s": [
+      5,
+      10
+    ]
+  },
+  "hotspots": [
+    {
+      "name": "bundaran-hi",
+      "lat": -6.1951,
+      "lng": 106.823,
+      "sigma_m": 500,
+      "weight": 3
+    }
+  ],
+  "phases": [
+    {
+      "name": "steady",
+      "duration_s": 30,
+      "orders_per_s": 0.667,
+      "hotspot_share": 0.7
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+.git
+.gitignore
+node_modules
+web/dashboard/node_modules
+web/dashboard/.next
+loadtest/results

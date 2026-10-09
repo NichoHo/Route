@@ -1,0 +1,27 @@
+{
+  "profile": "contention",
+  "description": "ROUTE_SPEC.md section 11 Contention: 200 couriers, 500 orders/s. Deliberately under-supplied.",
+  "started_at": "2026-10-08T08:09:57.582016276Z",
+  "finished_at": "2026-10-08T08:14:27.574395565Z",
+  "duration_s": 270.003278684,
+  "couriers": 200,
+  "orders": {
+    "sent": 60003,
+    "created": 60003,
+    "dropped_by_client": 0,
+    "errors": 0,
+    "by_http_status": {
+      "201": 60003
+    }
+  },
+  "post_orders_latency_ms_client_side": {
+    "p50": 8,
+    "p99": 64,
+    "max": 356
+  },
+  "sessions": {
+    "opened": 200,
+    "reconnects": 0,
+    "token_errors": 0
+  }
+}

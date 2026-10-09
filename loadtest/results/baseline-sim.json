@@ -1,0 +1,27 @@
+{
+  "profile": "baseline",
+  "description": "ROUTE_SPEC.md section 11 Baseline: 1,000 couriers, 50 orders/s, 10 minutes.",
+  "started_at": "2026-10-08T07:42:42.782268753Z",
+  "finished_at": "2026-10-08T07:53:42.757687014Z",
+  "duration_s": 660.014844036,
+  "couriers": 1000,
+  "orders": {
+    "sent": 29832,
+    "created": 29832,
+    "dropped_by_client": 0,
+    "errors": 0,
+    "by_http_status": {
+      "201": 29832
+    }
+  },
+  "post_orders_latency_ms_client_side": {
+    "p50": 4,
+    "p99": 16,
+    "max": 205
+  },
+  "sessions": {
+    "opened": 1000,
+    "reconnects": 0,
+    "token_errors": 0
+  }
+}
