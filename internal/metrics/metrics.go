@@ -72,6 +72,16 @@ var (
 		Buckets: []float64{0.1, 0.5, 1, 2, 5, 10, 30},
 	})
 
+	OrdersCreatedTotal = promauto.NewCounter(prometheus.CounterOpts{
+		Name: "route_orders_created_total",
+		Help: "Total number of orders accepted by POST /orders (repeats of an Idempotency-Key are not counted)",
+	})
+
+	OrdersExhaustedTotal = promauto.NewCounter(prometheus.CounterOpts{
+		Name: "route_orders_exhausted_total",
+		Help: "Total number of orders given up on: out of attempts, or queued too long",
+	})
+
 	MatchRate = promauto.NewCounter(prometheus.CounterOpts{
 		Name: "route_matches_total",
 		Help: "Total number of successful matches",

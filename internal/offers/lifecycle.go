@@ -188,6 +188,9 @@ func (l *Lifecycle) resolveFailedOffer(ctx context.Context, offerID, courierID, 
 	}
 
 	metrics.OfferOutcomeTotal.WithLabelValues(reason).Inc()
+	if status == "exhausted" {
+		metrics.OrdersExhaustedTotal.Inc()
+	}
 
 	l.claims.ReleaseClaim(ctx, actualCourierID, offerID)
 	if attempts < config.MaxAttempts {
@@ -591,5 +594,7 @@ func (l *Lifecycle) exhaustStaleOrders(ctx context.Context) {
 
 	if err := tx.Commit(ctx); err != nil {
 		log.Printf("sweep: failed to commit stale-order exhaustion: %v", err)
+		return
 	}
+	metrics.OrdersExhaustedTotal.Add(float64(len(exhausted)))
 }

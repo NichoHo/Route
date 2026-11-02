@@ -30,7 +30,11 @@ type Batcher struct {
 	windowMs time.Duration
 	maxBatch int
 
-	queue           chan string
+	queue chan string
+	// waiting holds the orders that are in the queue or the open batch, so an
+	// order triggered again (by the sweep) takes no second slot.
+	waitMu          sync.Mutex
+	waiting         map[string]struct{}
 	droppedTriggers atomic.Int64
 
 	wg sync.WaitGroup
@@ -62,6 +66,7 @@ func NewBatcher(pool *pgxpool.Pool, store *index.Store, claims *claims.Manager, 
 		windowMs:  config.BatchWindow,
 		maxBatch:  config.MaxBatchSize,
 		queue:     make(chan string, 10000),
+		waiting:   make(map[string]struct{}),
 		rates:     make(map[string]rateEntry),
 		inflight:  make(chan struct{}, config.MaxConcurrentBatches),
 		ctx:       ctx,
@@ -93,9 +98,18 @@ func (b *Batcher) SetLifecycle(l *offers.Lifecycle) {
 // a batch always solves on a fresh background context, since the batch
 // outlives whatever request (or sweep tick) triggered it.
 func (b *Batcher) Trigger(orderID string) {
+	b.waitMu.Lock()
+	if _, ok := b.waiting[orderID]; ok {
+		b.waitMu.Unlock()
+		return
+	}
+	b.waiting[orderID] = struct{}{}
+	b.waitMu.Unlock()
+
 	select {
 	case b.queue <- orderID:
 	default:
+		b.stopWaiting([]string{orderID})
 		// The order is safe in Postgres as 'queued'; only this wake-up is
 		// lost, and the sweep sends another. Count it, and log only the first
 		// and every 10,000th: under overload one line per drop is a flood.
@@ -104,6 +118,16 @@ func (b *Batcher) Trigger(orderID string) {
 			log.Printf("batcher queue full: %d wake-ups dropped so far; the sweep will retry them", n)
 		}
 	}
+}
+
+// stopWaiting forgets orders whose batch has been taken up, so that a later
+// Trigger for them counts as a new request.
+func (b *Batcher) stopWaiting(ids []string) {
+	b.waitMu.Lock()
+	for _, id := range ids {
+		delete(b.waiting, id)
+	}
+	b.waitMu.Unlock()
 }
 
 func (b *Batcher) loop() {
@@ -142,6 +166,7 @@ func (b *Batcher) loop() {
 // config.MaxConcurrentBatches are already running, which holds back the loop
 // (and so the queue) instead of piling up work.
 func (b *Batcher) flush(orderIDs []string, windowOpenAt time.Time) {
+	b.stopWaiting(orderIDs)
 	metrics.BatchSize.Observe(float64(len(orderIDs)))
 	b.inflight <- struct{}{}
 	b.flushing.Add(1)

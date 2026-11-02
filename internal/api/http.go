@@ -17,6 +17,7 @@ import (
 
 	"route/internal/config"
 	"route/internal/matcher"
+	"route/internal/metrics"
 	"route/internal/offers"
 	"route/internal/surge"
 )
@@ -180,6 +181,7 @@ func (api *OrderAPI) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	metrics.OrdersCreatedTotal.Inc()
 	api.surge.RecordOrder(req.PickupLat, req.PickupLng)
 
 	w.Header().Set("Content-Type", "application/json")

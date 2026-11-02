@@ -20,6 +20,21 @@ type simEnv struct {
 	apiToken   string
 	httpClient *http.Client
 	stats      *Stats
+
+	// rateOverride, when set, replaces every phase's orders_per_s. The
+	// controller sets it from the dashboard; 0 pauses order generation.
+	rateOverride atomic.Pointer[float64]
+	// loadStarted is when order generation began, in Unix nanoseconds; 0
+	// while the fleet is still connecting.
+	loadStarted atomic.Int64
+}
+
+// ordersPerS is the arrival rate in effect for phase.
+func (e *simEnv) ordersPerS(phase Phase) float64 {
+	if r := e.rateOverride.Load(); r != nil {
+		return *r
+	}
+	return phase.OrdersPerS
 }
 
 // latencyBuckets: bucket i counts POST latencies in [2^(i-1), 2^i) ms, with
@@ -141,7 +156,7 @@ func runOrders(ctx context.Context, p *Profile, env *simEnv, smp *sampler, runID
 			if !running {
 				return
 			}
-			arrivals := poisson(smp.rng, phase.OrdersPerS*now.Sub(last).Seconds())
+			arrivals := poisson(smp.rng, env.ordersPerS(phase)*now.Sub(last).Seconds())
 			last = now
 			for i := 0; i < arrivals; i++ {
 				pLat, pLng := smp.pickup(phase)

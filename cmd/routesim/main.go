@@ -133,6 +133,7 @@ func main() {
 	case <-time.After(warmup):
 	}
 	loadStarted := time.Now()
+	env.loadStarted.Store(loadStarted.UnixNano())
 
 	// Order generation finishes when the scenario does (never, for a loop).
 	runOrders(ctx, profile, env, newSampler(profile, rand.New(rand.NewSource(seed))), strconv.FormatInt(started.UnixNano(), 36))
