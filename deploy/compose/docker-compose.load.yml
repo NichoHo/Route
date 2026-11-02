@@ -1,5 +1,5 @@
 # Load-test overrides. Used by loadtest/run.sh as:
-#   docker-compose -p routeload -f docker-compose.yml -f docker-compose.load.yml ...
+#   docker compose -p routeload -f docker-compose.yml -f docker-compose.load.yml ...
 services:
   # Nothing else on the machine should be able to collide with these ports,
   # and the load test does not need them from the host.

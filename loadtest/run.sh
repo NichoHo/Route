@@ -27,7 +27,7 @@ export BENCH_SCENARIO=$scenario BENCH_LABEL=$label BENCH_WINDOW_MS=$window_ms
 export BATCH_WINDOW=${window_ms}ms
 export BENCH_HARDWARE=${BENCH_HARDWARE:-$(docker info --format 'Docker VM: {{.NCPU}} CPUs, {{.MemTotal}} bytes RAM, {{.OperatingSystem}}')}
 
-DC="docker-compose -p routeload -f deploy/compose/docker-compose.yml -f deploy/compose/docker-compose.load.yml"
+DC="docker compose -p routeload -f deploy/compose/docker-compose.yml -f deploy/compose/docker-compose.load.yml"
 cleanup() { $DC down -v >/dev/null 2>&1 || true; }
 trap cleanup EXIT
 cleanup
